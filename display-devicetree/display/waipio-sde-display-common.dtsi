@@ -39,6 +39,16 @@
 
 #include "waipio-sde-display-pinctrl.dtsi"
 
+//#ifdef OPLUS_FEATURE_DISPLAY
+&soc {
+	oplus_display_dev: oplus,dsi-display-dev {
+		oplus,dsi-panel-primary = <>;
+		oplus,dsi-panel-secondary = <>;
+		oplus,dsi-panel-extended = <>;
+	};
+};
+//#endif /* OPLUS_FEATURE_DISPLAY */
+
 &soc {
 	dsi_panel_pwr_supply_sim: dsi_panel_pwr_supply_sim {
 		#address-cells = <1>;

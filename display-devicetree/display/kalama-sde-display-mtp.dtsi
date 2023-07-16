@@ -176,7 +176,11 @@
 };
 
 &sde_dsi {
-	qcom,dsi-default-panel = <&dsi_vtdr6130_amoled_cmd>;
+//#ifdef OPLUS_FEATURE_DISPLAY
+	qcom,dsi-default-panel = <&dsi_vtdr6130_amoled_video>;
+//#else /* OPLUS_FEATURE_DISPLAY */
+//	qcom,dsi-default-panel = <&dsi_vtdr6130_amoled_cmd>;
+//#endif /* OPLUS_FEATURE_DISPLAY */
 };
 
 &qupv3_se4_i2c {

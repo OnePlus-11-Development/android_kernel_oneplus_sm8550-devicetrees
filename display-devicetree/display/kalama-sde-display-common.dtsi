@@ -36,6 +36,41 @@
 
 #include "kalama-sde-display-pinctrl.dtsi"
 
+//#ifdef OPLUS_FEATURE_DISPLAY
+#include "dsi-panel-boe-nt37705-1080-2412-dsc-cmd.dtsi"
+#include "dsi-panel-samsung-amb670yf07-1440-3216-dsc-cmd.dtsi"
+#include "dsi-panel-samsung-amb670yf09-1440-3216-dsc-cmd.dtsi"
+#include "dsi-panel-samsung-amb670yf07-cs-1440-3216-dsc-cmd.dtsi"
+#include "dsi-panel-samsung-amb670yf07-fs-1440-3216-dsc-cmd.dtsi"
+#include "dsi-panel-samsung-amb682cg01-1440-3168-dsc-cmd.dtsi"
+#include "dsi-panel-samsung-amb682cg01-1440-3168-dsc-cmd-evt2.dtsi"
+#include "dsi-panel-samsung-amb682cg01-1440-3168-dsc-cmd-evt1.dtsi"
+#include "dsi-panel-samsung-amb682cg01-1440-3168-dsc-cmd-t0.dtsi"
+
+&soc {
+	oplus_display_dev: oplus,dsi-display-dev {
+		oplus,dsi-panel-primary = <
+			&dsi_panel_boe_nt37705_1080_2412_dsc_cmd
+			&dsi_panel_samsung_amb670yf07_1440_3216_dsc_cmd
+			&dsi_panel_samsung_amb670yf09_1440_3216_dsc_cmd
+			&dsi_panel_samsung_amb670yf07_cs_1440_3216_dsc_cmd
+			&dsi_panel_samsung_amb670yf07_fs_1440_3216_dsc_cmd
+			&dsi_panel_samsung_amb682cg01_1440_3168_dsc_cmd
+			&dsi_panel_samsung_amb682cg01_1440_3168_dsc_cmd_evt2
+			&dsi_panel_samsung_amb682cg01_1440_3168_dsc_cmd_evt1
+			&dsi_panel_samsung_amb682cg01_1440_3168_dsc_cmd_t0
+		>;
+		oplus,dsi-panel-secondary = <>;
+		oplus,dsi-panel-extended = <>;
+	};
+};
+
+&L13B {
+	regulator-max-microvolt = <3200000>;
+	qcom,init-voltage = <3200000>;
+};
+//#endif /* OPLUS_FEATURE_DISPLAY */
+
 &soc {
 	dsi_panel_pwr_supply_sim: dsi_panel_pwr_supply_sim {
 		#address-cells = <1>;
@@ -87,6 +122,34 @@
 		};
 	};
 
+//#ifdef OPLUS_FEATURE_DISPLAY
+	oplus_dsi_panel_pwr_supply: oplus_dsi_panel_pwr_supply {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		qcom,panel-supply-entry@0 {
+			reg = <0>;
+			qcom,supply-name = "vddio";
+			qcom,supply-min-voltage = <1800000>;
+			qcom,supply-max-voltage = <1800000>;
+			qcom,supply-enable-load = <200000>;
+			qcom,supply-disable-load = <80>;
+			qcom,supply-post-on-sleep = <0>;
+			qcom,supply-pre-off-sleep = <10>;
+		};
+
+		qcom,panel-supply-entry@1 {
+			reg = <1>;
+			qcom,supply-name = "vci";
+			qcom,supply-min-voltage = <3200000>;
+			qcom,supply-max-voltage = <3200000>;
+			qcom,supply-enable-load = <10000>;
+			qcom,supply-disable-load = <0>;
+			qcom,supply-post-on-sleep = <0>;
+		};
+	};
+//#endif /* OPLUS_FEATURE_DISPLAY */
+
 	dsi_panel_pwr_supply_avdd: dsi_panel_pwr_supply_avdd {
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -118,7 +181,14 @@
 		qcom,dsi-ctrl = <&mdss_dsi0 &mdss_dsi1>;
 		qcom,dsi-phy = <&mdss_dsi_phy0 &mdss_dsi_phy1>;
 
-		pinctrl-names = "panel_active", "panel_suspend";
+//#ifdef OPLUS_FEATURE_DISPLAY
+		qcom,platform-te-gpio-1 = <&tlmm 87 0>;
+		pinctrl-names = "panel_active", "panel_suspend", "te1_active", "te1_suspend";
+		pinctrl-2 = <&sde_te1_active>;
+		pinctrl-3 = <&sde_te1_suspend>;
+//#else /* OPLUS_FEATURE_DISPLAY */
+//		pinctrl-names = "panel_active", "panel_suspend";
+//#endif /* OPLUS_FEATURE_DISPLAY */
 		pinctrl-0 = <&sde_dsi_active &sde_te_active>;
 		pinctrl-1 = <&sde_dsi_suspend &sde_te_suspend>;
 
@@ -222,7 +292,9 @@
 	qcom,qsync-enable;
 	qcom,dsi-supported-qsync-min-fps-list = <80 70 60 50>;
 
-	qcom,esd-check-enabled;
+//#ifdef OPLUS_FEATURE_DISPLAY
+//	qcom,esd-check-enabled;
+//#endif /* OPLUS_FEATURE_DISPLAY */
 	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
 	qcom,mdss-dsi-panel-status-command = [06 01 00 01 00 00 01 0a];
 	qcom,mdss-dsi-panel-status-command-state = "dsi_lp_mode";

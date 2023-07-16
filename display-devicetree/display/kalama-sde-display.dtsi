@@ -1,6 +1,10 @@
 #include "kalama-sde.dtsi"
 #include "kalama-sde-display-common.dtsi"
 #include <dt-bindings/clock/qcom,dispcc-kalama.h>
+//ifdef OPLUS_FEATURE_DISPLAY
+/* add for custom clk by gpio5 */
+#include <dt-bindings/clock/qcom,rpmh.h>
+//#endif /* OPLUS_FEATURE_DISPLAY */
 
 &pm8550_gpios {
 	display_panel_avdd_default: display_panel_avdd_default {
@@ -87,10 +91,18 @@
 		  * MDP clock nodes, no actual vote shall be added and this
 		  * change is done just to satisfy sync state requirements.
 		  */
-		 <&dispcc DISP_CC_MDSS_MDP_CLK>;
+		 <&dispcc DISP_CC_MDSS_MDP_CLK>,
+		 //ifdef OPLUS_FEATURE_DISPLAY
+		 /* add for custom clk by gpio5 */
+		 <&rpmhcc RPMH_DIV_CLK1>;
+		 //#endif /* OPLUS_FEATURE_DISPLAY */
 	clock-names = "pll_byte_clk0", "pll_dsi_clk0",
 		      "pll_byte_clk1", "pll_dsi_clk1",
-		      "mdp_core_clk";
+		      "mdp_core_clk",
+		      //ifdef OPLUS_FEATURE_DISPLAY
+		      /* add for custom clk by gpio5 */
+		      "div_clk";
+		      //#endif /* OPLUS_FEATURE_DISPLAY */
 	vddio-supply = <&L12B>;
 	vci-supply = <&L13B>;
 	vdd-supply = <&L11B>;
@@ -119,10 +131,12 @@
 	clock-names = "pll_byte_clk0", "pll_dsi_clk0",
 		      "pll_byte_clk1", "pll_dsi_clk1",
 		      "mdp_core_clk";
-	vddio-supply = <&L12B>;
-	vci-supply = <&L13B>;
-	vdd-supply = <&L11B>;
-
+	/* #if defined(CONFIG_PXLW_IRIS) */
+		/* using dummy regulator for 2nd display */
+		//vddio-supply = <&L12B>;
+		//vci-supply = <&L13B>;
+		//vdd-supply = <&L11B>;
+	/* #endif */
 };
 
 &mdss_mdp {
@@ -252,3 +266,8 @@
 		};
 	};
 };
+
+/* #if defined(CONFIG_PXLW_IRIS) */
+#include "pxlw/pxlw-iris7.dtsi"
+#include "pxlw/dsi-panel-pxlw.dtsi"
+/* #endif */
