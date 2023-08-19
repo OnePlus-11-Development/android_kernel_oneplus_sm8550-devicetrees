@@ -152,6 +152,7 @@
 };
 
 &pm8550ve_f_gpios {
+
 	cam_sensor_laser_intr_active: cam_sensor_laser_intr_active {
 		pins = "gpio6";
 		function = "normal";
@@ -168,6 +169,16 @@
 		power-source = <1>; /* 1.8V */
 		qcom,drive-strength = <2>;
 	};
+
+	cam_sensor_laser_enable: cam_sensor_laser_enable {
+		pins = "gpio5";
+		function = "normal";
+		bias-disable;
+		power-source = <1>;
+		output-high;
+		qcom,drive-strength = <2>;
+	};
+
 };
 
 &qupv3_se0_i2c {
@@ -176,9 +187,10 @@
         reg = <0x41>;
         tof,tof_poll_period = <0xA>; /*poll period (100 usec)*/
         laser_vdd-supply = <&L6M>;
-        pinctrl-names = "laser_default", "laser_suspend";
+        pinctrl-names = "laser_default", "laser_suspend", "default";
         pinctrl-0 = <&cam_sensor_laser_intr_active>;
         pinctrl-1 = <&cam_sensor_laser_intr_suspend>;
+        pinctrl-2 =  <&cam_sensor_laser_enable>;
         interrupt-parent = <&pm8550ve_f_gpios>;
         enable-gpios = <&pm8550ve_f_gpios 5 0>;
         irq-gpios = <&pm8550ve_f_gpios 6 0>;

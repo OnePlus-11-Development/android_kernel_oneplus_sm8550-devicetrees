@@ -64,6 +64,7 @@
 		rgltr-min-voltage = <1800000 3152000>;
 		rgltr-max-voltage = <1800000 3152000>;
 		rgltr-load-current = <600000 300000>;
+		is_af_parklens = <1>;
 		status = "ok";
 	};
 
@@ -277,6 +278,7 @@
 		rgltr-min-voltage = <1800000 2800000>;
 		rgltr-max-voltage = <1800000 2800000>;
 		rgltr-load-current = <600000 600000>;
+		is_update_pid;
 		status = "ok";
 	};
 
@@ -314,6 +316,7 @@
 		ois,fw=<1>;
 		download,fw=<1>;
 		ois_eis_function = <5>;
+		ois_switch_spi_mode=<1>;
 		status = "ok";
 	};
 
@@ -328,7 +331,7 @@
 		cam_clk-supply = <&cam_cc_titan_top_gdsc>;
 		regulator-names = "cam_vio",  "cam_vdig","cam_vana", "cam_v_custom1", "cam_vaf", "cam_clk";
 		rgltr-cntrl-support;
-		rgltr-min-voltage = <1800000 1152000 2904000 1800000 2800000 0>;
+		rgltr-min-voltage = <1800000 1152000 2800000 1800000 2800000 0>;
 		rgltr-max-voltage = <1800000 1152000 2904000 1800000 2800000 0>;
 		rgltr-load-current = <600000 1200000 300000 600000 600000 0>;
 		gpio-no-mux = <0>;
@@ -410,7 +413,7 @@
 		cam_clk-supply = <&cam_cc_titan_top_gdsc>;
 		regulator-names = "cam_vio",  "cam_vdig","cam_vana", "cam_v_custom1", "cam_vaf", "cam_clk";
 		rgltr-cntrl-support;
-		rgltr-min-voltage = <1800000 1152000 2904000 1800000 2800000 0>;
+		rgltr-min-voltage = <1800000 1152000 2800000 1800000 2800000 0>;
 		rgltr-max-voltage = <1800000 1152000 2904000 1800000 2800000 0>;
 		rgltr-load-current = <600000 1200000 300000 600000 600000 0>;
 		gpio-no-mux = <0>;
@@ -478,6 +481,8 @@
 		clock-cntl-level = "nominal";
 		clock-rates = <19200000>;
 		status = "ok";
+		lock-cci-during-up;
+		lock-cci-during-down;
 	};
 
     pltf_tof8801: ams,pltf_tof8801@0 {

@@ -279,13 +279,8 @@
 &mdss_dsi_phy0 {
 	vdda-0p9-supply = <&L1E>;
 	qcom,panel-allow-phy-poweroff;
-//#ifdef OPLUS_FEATURE_DISPLAY
-	/delete-property/ qcom,dsi-pll-ssc-en;
-	/delete-property/ qcom,dsi-pll-ssc-mode;
-//#else /* OPLUS_FEATURE_DISPLAY */
-//	qcom,dsi-pll-ssc-en;
-//	qcom,dsi-pll-ssc-mode = "down-spread";
-//#endif /* OPLUS_FEATURE_DISPLAY */
+	qcom,dsi-pll-ssc-en;
+	qcom,dsi-pll-ssc-mode = "down-spread";
 	pll_codes_region = <&dsi_pll_codes_data>;
 
 };
@@ -293,11 +288,6 @@
 &mdss_dsi_phy1 {
 	vdda-0p9-supply = <&L1E>;
 	qcom,panel-allow-phy-poweroff;
-//#ifdef OPLUS_FEATURE_DISPLAY
-	/delete-property/ qcom,dsi-pll-ssc-en;
-	/delete-property/ qcom,dsi-pll-ssc-mode;
-//#else /* OPLUS_FEATURE_DISPLAY */
-//	qcom,dsi-pll-ssc-en;
-//	qcom,dsi-pll-ssc-mode = "down-spread";
-//#endif /* OPLUS_FEATURE_DISPLAY */
+	qcom,dsi-pll-ssc-en;
+	qcom,dsi-pll-ssc-mode = "down-spread";
 };

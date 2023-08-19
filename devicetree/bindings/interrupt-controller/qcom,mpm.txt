@@ -27,7 +27,6 @@ Properties:
 		"qcom,mpm-khaje"
 		"qcom,mpm-monaco"
 		"qcom,mpm-scuba"
-		"qcom,mpm-sa410m"
 
 - interrupts:
 	Usage: required

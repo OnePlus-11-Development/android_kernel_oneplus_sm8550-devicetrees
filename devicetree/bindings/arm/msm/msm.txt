@@ -187,9 +187,6 @@ Generic board variants:
 - CCARD device:
   compatible = "qcom,ccard"
 
-- QAM device:
-  compatible = "qcom,qam"
-
 Boards (SoC type + board variant):
 
 compatible = "qcom,apq8016"
@@ -250,7 +247,6 @@ compatible = "qcom,kona-rumi"
 compatible = "qcom,kona-mtp"
 compatible = "qcom,kona-cdp"
 compatible = "qcom,kona-qrd"
-compatible = "qcom,kona-iot"
 compatible = "qcom,lahaina-rumi"
 compatible = "qcom,lahaina-atp"
 compatible = "qcom,lahaina-mtp"
@@ -356,8 +352,6 @@ compatible = "qcom,lemans-rumi"
 compatible = "qcom,lemans-ivi"
 compatible = "qcom,lemans-ivi-adp-air"
 compatible = "qcom,lemans-ivi-adp-star"
-compatible = "qcom,lemans-ivi-qam-star"
 compatible = "qcom,lemans-adas-high"
 compatible = "qcom,lemans-adas-high-adp-air"
 compatible = "qcom,lemans-adas-high-adp-star"
-compatible = "qcom,lemans-adas-high-qam-star"

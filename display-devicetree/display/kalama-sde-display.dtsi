@@ -1,10 +1,6 @@
 #include "kalama-sde.dtsi"
 #include "kalama-sde-display-common.dtsi"
 #include <dt-bindings/clock/qcom,dispcc-kalama.h>
-//ifdef OPLUS_FEATURE_DISPLAY
-/* add for custom clk by gpio5 */
-#include <dt-bindings/clock/qcom,rpmh.h>
-//#endif /* OPLUS_FEATURE_DISPLAY */
 
 &pm8550_gpios {
 	display_panel_avdd_default: display_panel_avdd_default {
@@ -91,18 +87,11 @@
 		  * MDP clock nodes, no actual vote shall be added and this
 		  * change is done just to satisfy sync state requirements.
 		  */
-		 <&dispcc DISP_CC_MDSS_MDP_CLK>,
-		 //ifdef OPLUS_FEATURE_DISPLAY
-		 /* add for custom clk by gpio5 */
-		 <&rpmhcc RPMH_DIV_CLK1>;
-		 //#endif /* OPLUS_FEATURE_DISPLAY */
+		 <&dispcc DISP_CC_MDSS_MDP_CLK>;
 	clock-names = "pll_byte_clk0", "pll_dsi_clk0",
 		      "pll_byte_clk1", "pll_dsi_clk1",
 		      "mdp_core_clk",
-		      //ifdef OPLUS_FEATURE_DISPLAY
-		      /* add for custom clk by gpio5 */
-		      "div_clk";
-		      //#endif /* OPLUS_FEATURE_DISPLAY */
+		      "mdp_core_clk";
 	vddio-supply = <&L12B>;
 	vci-supply = <&L13B>;
 	vdd-supply = <&L11B>;
@@ -131,12 +120,9 @@
 	clock-names = "pll_byte_clk0", "pll_dsi_clk0",
 		      "pll_byte_clk1", "pll_dsi_clk1",
 		      "mdp_core_clk";
-	/* #if defined(CONFIG_PXLW_IRIS) */
-		/* using dummy regulator for 2nd display */
-		//vddio-supply = <&L12B>;
-		//vci-supply = <&L13B>;
-		//vdd-supply = <&L11B>;
-	/* #endif */
+	vddio-supply = <&L12B>;
+	vci-supply = <&L13B>;
+	vdd-supply = <&L11B>;
 };
 
 &mdss_mdp {
@@ -167,107 +153,3 @@
 		};
 	};
 };
-
-&dsi_vtdr6130_amoled_qsync_144hz_cmd {
-	qcom,ulps-enabled;
-};
-
-&dsi_sharp_4k_dsc_cmd {
-	qcom,ulps-enabled;
-};
-
-&dsi_sharp_qsync_wqhd_cmd {
-	qcom,ulps-enabled;
-	qcom,mdss-dsi-display-timings {
-		timing@0 { /* WQHD 60FPS CMD */
-			qcom,partial-update-enabled = "single_roi";
-			qcom,panel-roi-alignment = <720 8 8 8 1440 8>;
-		};
-
-		timing@1 { /* FHD 60FPS CMD */
-			qcom,partial-update-enabled = "single_roi";
-			qcom,panel-roi-alignment = <540 8 8 8 1080 8>;
-		};
-
-		timing@2 { /* WQHD 90FPS CMD */
-			qcom,partial-update-enabled = "single_roi";
-			qcom,panel-roi-alignment = <720 8 8 8 1440 8>;
-		};
-
-		timing@3 { /* WQHD 120FPS CMD */
-			qcom,partial-update-enabled = "single_roi";
-			qcom,panel-roi-alignment = <720 8 8 8 1440 8>;
-		};
-
-		timing@4 { /* FHD 120FPS CMD */
-			qcom,partial-update-enabled = "single_roi";
-			qcom,panel-roi-alignment = <540 8 8 8 1080 8>;
-		};
-
-		timing@5 { /* FHD 90FPS CMD */
-			qcom,partial-update-enabled = "single_roi";
-			qcom,panel-roi-alignment = <540 8 8 8 1080 8>;
-		};
-	};
-};
-
-&dsi_r66451_amoled_144hz_cmd_cphy {
-	qcom,ulps-enabled;
-};
-
-&dsi_dual_nt35597_truly_cmd {
-	qcom,ulps-enabled;
-};
-
-&dsi_nt35695b_truly_fhd_sl_cmd {
-	qcom,ulps-enabled;
-};
-
-&dsi_sim_cmd {
-	qcom,ulps-enabled;
-	qcom,mdss-dsi-display-timings {
-		timing@0 { /* WQHD 60FPS cmd vid mode*/
-			qcom,panel-roi-alignment = <720 40 720 40 720 40>;
-			qcom,partial-update-enabled = "single_roi";
-		};
-		timing@2 { /* FHD 60FPS cmd mode*/
-			qcom,panel-roi-alignment = <540 40 540 40 540 40>;
-			qcom,partial-update-enabled = "single_roi";
-		};
-		timing@3 { /* HD 60FPS cmd mode*/
-			qcom,panel-roi-alignment = <360 20 360 20 360 20>;
-			qcom,partial-update-enabled = "single_roi";
-		};
-	};
-};
-
-&dsi_sim_dsc_375_cmd {
-	qcom,ulps-enabled;
-};
-
-&dsi_sim_dsc_10b_cmd {
-	qcom,ulps-enabled;
-};
-
-&dsi_dual_sim_cmd {
-	qcom,ulps-enabled;
-};
-
-&dsi_dual_sim_dsc_375_cmd {
-	qcom,ulps-enabled;
-};
-
-&dsi_sim_sec_hd_cmd {
-	qcom,ulps-enabled;
-	qcom,mdss-dsi-display-timings {
-		timing@0 {
-			qcom,panel-roi-alignment = <720 40 720 40 720 40>;
-			qcom,partial-update-enabled = "single_roi";
-		};
-	};
-};
-
-/* #if defined(CONFIG_PXLW_IRIS) */
-#include "pxlw/pxlw-iris7.dtsi"
-#include "pxlw/dsi-panel-pxlw.dtsi"
-/* #endif */

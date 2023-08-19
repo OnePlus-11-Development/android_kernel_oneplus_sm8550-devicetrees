@@ -81,16 +81,6 @@
 	qcom,init-voltage = <2800000>;
 };
 
-&regulator_ocp_notifier {
-	/delete-property/ periph-c40-supply;
-	/delete-property/ periph-c41-supply;
-	/delete-property/ periph-c42-supply;
-	/delete-property/ periph-c43-supply;
-	/delete-property/ periph-c44-supply;
-	/delete-property/ periph-c45-supply;
-	/delete-property/ periph-c46-supply;
-};
-
 &usb_qmp_dp_phy {
 	pinctrl-names = "default";
 };
@@ -157,7 +147,7 @@
 		};
 	};
 
-	cpu-1-9 {
+	cpu-1-6 {
 		trips {
 			thermal-engine-config {
 				temperature = <125000>;
@@ -171,33 +161,22 @@
 				type = "passive";
 			};
 
-			fan_cpu19_config0: fan-cpu19-config0 {
-				temperature = <85000>;
-				hysteresis = <0>;
-				type = "passive";
-			};
-
-			fan_cpu19_config1: fan-cpu19-config1 {
-				temperature = <90000>;
-				hysteresis = <0>;
+			fan_cpu16_config0: fan-cpu16-config0 {
+				temperature = <95000>;
+				hysteresis = <5000>;
 				type = "passive";
 			};
 		};
 
 		cooling-maps {
 			fan_cdev_0 {
-				trip = <&fan_cpu19_config0>;
-				cooling-device = <&fancontroller 2 2>;
-			};
-
-			fan_cdev_1 {
-				trip = <&fan_cpu19_config1>;
-				cooling-device = <&fancontroller 3 3>;
+				trip = <&fan_cpu16_config0>;
+				cooling-device = <&fancontroller 1 1>;
 			};
 		};
 	};
 
-	cpu-1-10 {
+	cpu-1-7 {
 		trips {
 			thermal-engine-config {
 				temperature = <125000>;
@@ -211,28 +190,17 @@
 				type = "passive";
 			};
 
-			fan_cpu1a_config0: fan-cpu1a-config0 {
-				temperature = <85000>;
-				hysteresis = <0>;
-				type = "passive";
-			};
-
-			fan_cpu1a_config1: fan-cpu1a-config1 {
-				temperature = <90000>;
-				hysteresis = <0>;
+			fan_cpu17_config0: fan-cpu17-config0 {
+				temperature = <95000>;
+				hysteresis = <5000>;
 				type = "passive";
 			};
 		};
 
 		cooling-maps {
 			fan_cdev_0 {
-				trip = <&fan_cpu1a_config0>;
-				cooling-device = <&fancontroller 2 2>;
-			};
-
-			fan_cdev_1 {
-				trip = <&fan_cpu1a_config1>;
-				cooling-device = <&fancontroller 3 3>;
+				trip = <&fan_cpu17_config0>;
+				cooling-device = <&fancontroller 1 1>;
 			};
 		};
 	};
@@ -252,13 +220,7 @@
 			};
 
 			fan_gpuss0_config0: fan-gpuss0-config0 {
-				temperature = <70000>;
-				hysteresis = <0>;
-				type = "passive";
-			};
-
-			fan_gpuss0_config1: fan-gpuss0-config1 {
-				temperature = <90000>;
+				temperature = <95000>;
 				hysteresis = <0>;
 				type = "passive";
 			};
@@ -267,12 +229,7 @@
 		cooling-maps {
 			fan_cdev_0 {
 				trip = <&fan_gpuss0_config0>;
-				cooling-device = <&fancontroller 3 3>;
-			};
-
-			fan_cdev_1 {
-				trip = <&fan_gpuss0_config1>;
-				cooling-device = <&fancontroller 4 4>;
+				cooling-device = <&fancontroller 1 1>;
 			};
 		};
 	};
@@ -292,13 +249,7 @@
 			};
 
 			fan_gpuss1_config0: fan-gpuss1-config0 {
-				temperature = <70000>;
-				hysteresis = <0>;
-				type = "passive";
-			};
-
-			fan_gpuss1_config1: fan-gpuss1-config1 {
-				temperature = <90000>;
+				temperature = <95000>;
 				hysteresis = <0>;
 				type = "passive";
 			};
@@ -307,40 +258,7 @@
 		cooling-maps {
 			fan_cdev_0 {
 				trip = <&fan_gpuss1_config0>;
-				cooling-device = <&fancontroller 3 3>;
-			};
-
-			fan_cdev_1 {
-				trip = <&fan_gpuss1_config1>;
-				cooling-device = <&fancontroller 4 4>;
-			};
-		};
-	};
-
-	usb-therm {
-		trips {
-			fan_thmbat0_config0: fan-thmbat0-config0 {
-				temperature = <43000>;
-				hysteresis = <2000>;
-				type = "passive";
-			};
-
-			fan_thmbat1_config1: fan-thmbat1-config1 {
-				temperature = <45000>;
-				hysteresis = <3000>;
-				type = "passive";
-			};
-		};
-
-		cooling-maps {
-			fan_cdev_0 {
-				trip = <&fan_thmbat0_config0>;
-				cooling-device = <&fancontroller 3 3>;
-			};
-
-			fan_cdev_1 {
-				trip = <&fan_thmbat1_config1>;
-				cooling-device = <&fancontroller 4 4>;
+				cooling-device = <&fancontroller 1 1>;
 			};
 		};
 	};

@@ -39,22 +39,6 @@
 					0x0 0x4
 					0x9 0x14>;
 	};
-
-	bi_tcxo: bi_tcxo {
-		compatible = "fixed-factor-clock";
-		clock-mult = <1>;
-		clock-div = <2>;
-		clocks = <&xo_board>;
-		#clock-cells = <0>;
-	};
-
-	bi_tcxo_ao: bi_tcxo_ao {
-		compatible = "fixed-factor-clock";
-		clock-mult = <1>;
-		clock-div = <2>;
-		clocks = <&xo_board>;
-		#clock-cells = <0>;
-	};
 };
 
 &qupv3_se3_2uart {
@@ -70,17 +54,4 @@
 		usb-phy = <&usb_emuphy>, <&usb_nop_phy>;
 		dr_mode = "peripheral";
 	};
-};
-
-&debugcc {
-	clocks = <&bi_tcxo>, <&gcc 0>;
-};
-
-&cpufreq_hw {
-	clocks = <&bi_tcxo>, <&gcc GPLL0>;
-};
-
-&rpmhcc {
-	compatible = "qcom,dummycc";
-	clock-output-names = "rpmhcc_clocks";
 };

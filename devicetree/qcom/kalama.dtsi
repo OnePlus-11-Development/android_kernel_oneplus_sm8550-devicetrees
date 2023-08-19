@@ -33,13 +33,6 @@
 
 	reserved_memory: reserved-memory { };
 
-	mem-offline {
-		compatible = "qcom,mem-offline";
-		offline-sizes = <0x2 0xc0000000 0x1 0x00000000>;
-		granule = <512>;
-		mboxes = <&qmp_aop 0>;
-	};
-
 	aliases: aliases {
 		serial0 = &qupv3_se7_2uart;
 		hsuart0 = &qupv3_se14_4uart;
@@ -479,10 +472,10 @@
 		reg = <0x0 0xd4d00000 0x0 0x3300000>;
 	};
 
-	/*
-	 * tz_reserved_mem not passed to linux as valid memory. Size
-	 * varies based on bootloader policy.
-	 */
+	tz_reserved_mem: tz_reserved_region@d8000000 {
+		no-map;
+		reg = <0x0 0xd8000000 0x0 0x100000>;
+	};
 
 	xbl_sc_mem: xbl_sc_region@d8100000 {
 		no-map;
@@ -506,7 +499,7 @@
 
 	hwfence_shbuf: hwfence-shmem {
 		no-map;
-		reg = <0x0 0xe6440000 0x0 0x2dd000>;
+		reg = <0x0 0xe6440000 0x0 0x279000>;
 	};
 
 	trust_ui_vm_mem: trust_ui_vm_region@f3800000 {
@@ -645,14 +638,6 @@
 		size = <0x0 0x1400000>;
 	};
 
-	glink_contig_mem: glink_contig_region {
-		compatible = "shared-dma-pool";
-		alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
-		reusable;
-		alignment = <0x0 0x400000>;
-		size = <0x0 0x1000000>;
-	};
-
 /* #ifdef OPLUS_BUG_STABILITY */
 	ramoops_mem: ramoops_region {
 		compatible = "ramoops";
@@ -672,12 +657,6 @@
 		alignment = <0x0 0x400000>;
 		size = <0x0 0x2000000>;
 		linux,cma-default;
-	};
-
-	kinfo_mem: debug_kinfo_region {
-		alloc-ranges = <0x0 0x00000000 0xffffffff 0xffffffff>;
-		size = <0x0 0x1000>;
-		no-map;
 	};
 };
 
@@ -2605,11 +2584,6 @@
 			qcom,glinkpkt-ch-name = "DATA11";
 			qcom,glinkpkt-dev-name = "smd11";
 		};
-		qcom,glinkpkt-xpan_control {
-			qcom,glinkpkt-edge = "adsp";
-			qcom,glinkpkt-ch-name = "bt_cp_ctrl";
-			qcom,glinkpkt-dev-name = "bt_cp_ctrl";
-		};
 	};
 
 	qcom,glink {
@@ -3899,11 +3873,6 @@
 	};
 
 	msm_gpu: qcom,kgsl-3d0@3d00000 { };
-
-	google,debug-kinfo {
-		compatible = "google,debug-kinfo";
-		memory-region = <&kinfo_mem>;
-	};
 };
 
 &firmware {
